@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Bem-vindo</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+      margin: 0;
+      padding: 0;
+    }
+
+    .welcome-container {
+      text-align: center;
+      margin-top: 100px;
+    }
+
+    .welcome-container h1 {
+      font-size: 36px;
+      color: #235c23;
+    }
+
+    .welcome-container p {
+      font-size: 18px;
+      color: #333;
+    }
+
+    .logout-button {
+      padding: 10px 20px;
+      background-color: #235c23;
+      color: #fff;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+      font-size: 16px;
+      float: left;
+      margin-left: 20px;
+    }
+
+    .logout-button:hover {
+      background-color: #427942;
+    }
+
+    .logout-button:focus {
+      outline: none;
+    }
+
+    .post-container {
+      text-align: center;
+      margin-top: 50px;
+    }
+
+    .post-container textarea {
+      width: 400px;
+      height: 100px;
+      resize: none;
+    }
+
+    .post-container button {
+      margin-top: 10px;
+      padding: 10px 20px;
+      background-color: #235c23;
+      color: #fff;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .post-container button:hover {
+      background-color: #427942;
+    }
+
+    .post-container button:focus {
+      outline: none;
+    }
+
+    .username-button {
+      padding: 10px 20px;
+      background-color: #235c23;
+      color: #fff;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+      font-size: 16px;
+      margin-top: 10px;
+    }
+
+    .username-button:hover {
+      background-color: #427942;
+    }
+
+    .username-button:focus {
+      outline: none;
+    }
+
+    .published-posts {
+      margin-top: 50px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="welcome-container">
+    <h1>Bem-vindo ao Switter!</h1>
+    <p>Você está logado!</p>
+    <button class="logout-button" onclick="logout()">Sair</button>
+  </div>
+
+  <div class="post-container">
+    <textarea id="postInput" placeholder="Digite sua publicação"></textarea><br>
+    <button onclick="publishPost()">Publicar</button>
+    <button class="username-button" onclick="setUsername()">Nome de usuário</button>
+  </div>
+
+  <div class="published-posts">
+    <h2>Publicações:</h2>
+    <div id="publishedPosts"></div>
+  </div>
+
+  <script>
+    function logout() {
+      // Realize as ações necessárias para fazer logout, como limpar os dados de sessão ou redirecionar para a página de login.
+      // Exemplo simples de redirecionamento para a página de login (assumindo que o arquivo de login se chama "OI.html"):
+      window.location.href = "OI.html";
+    }
+
+    function setUsername() {
+      var username = prompt("Digite o seu nome de usuário:");
+      if (username !== null && username.trim() !== "") {
+        localStorage.setItem("username", username);
+      } else {
+        localStorage.setItem("username", "User0000");
+      }
+    }
+
+    function publishPost() {
+      var postInput = document.getElementById("postInput");
+      var postContent = postInput.value.trim();
+      if (postContent !== "") {
+        var username = localStorage.getItem("username") || "User0000";
+        var postElement = document.createElement("p");
+        postElement.innerText = username + ": " + postContent;
+        document.getElementById("publishedPosts").appendChild(postElement);
+        postInput.value = "";
+      }
+    }
+
+    function loadPublishedPosts() {
+      var publishedPosts = document.getElementById("publishedPosts");
+      var posts = localStorage.getItem("posts");
+      if (posts !== null && posts.trim() !== "") {
+        publishedPosts.innerHTML = posts;
+      }
+    }
+
+    function savePublishedPosts() {
+      var publishedPosts = document.getElementById("publishedPosts").innerHTML;
+      localStorage.setItem("posts", publishedPosts);
+    }
+
+    function removePublications() {
+      var publishedPosts = document.getElementById("publishedPosts");
+      publishedPosts.innerHTML = "";
+      localStorage.removeItem("posts");
+    }
+
+    window.addEventListener("load", function () {
+      loadPublishedPosts();
+      setTimeout(removePublications, 600000);
+    });
+
+    window.addEventListener("beforeunload", function () {
+      savePublishedPosts();
+    });
+  </script>
+</body>
+</html>
