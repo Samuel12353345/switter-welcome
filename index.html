@@ -157,80 +157,10 @@
     function logout() {
       // Realize as ações necessárias para fazer logout, como limpar os dados de sessão ou redirecionar para a página de login.
       // Exemplo simples de redirecionamento para a página de login (assumindo que o arquivo de login se chama "OI.html"):
-      window.location.href = "OI.html";
+      window.location.href = "https://samuel12353345.github.io/switter/";
     }
 
-    function setUsername() {
-      var username = prompt("Digite o seu nome de usuário:");
-      if (username !== null && username.trim() !== "") {
-        localStorage.setItem("username", username);
-      } else {
-        localStorage.setItem("username", "User0000");
-      }
-    }
-
-    function publishPost() {
-      var postInput = document.getElementById("postInput");
-      var postContent = postInput.value.trim();
-      if (postContent !== "") {
-        var username = localStorage.getItem("username") || "User0000";
-        var postElement = document.createElement("div");
-        postElement.className = "post";
-        var checkbox = document.createElement("input");
-        checkbox.type = "checkbox";
-        checkbox.className = "post-checkbox";
-        checkbox.onclick = function () {
-          var postContent = this.nextElementSibling;
-          if (this.checked) {
-            postContent.style.textDecoration = "line-through";
-          } else {
-            postContent.style.textDecoration = "none";
-          }
-        };
-        var postContentElement = document.createElement("p");
-        postContentElement.className = "post-content";
-        postContentElement.innerText = username + ": " + postContent;
-        var deleteButton = document.createElement("button");
-        deleteButton.className = "delete-button";
-        deleteButton.innerText = "X";
-        deleteButton.onclick = function () {
-          this.parentNode.remove();
-        };
-        postElement.appendChild(checkbox);
-        postElement.appendChild(postContentElement);
-        postElement.appendChild(deleteButton);
-        document.getElementById("publishedPosts").appendChild(postElement);
-        postInput.value = "";
-      }
-    }
-
-    function loadPublishedPosts() {
-      var publishedPosts = document.getElementById("publishedPosts");
-      var posts = localStorage.getItem("posts");
-      if (posts !== null && posts.trim() !== "") {
-        publishedPosts.innerHTML = posts;
-      }
-    }
-
-    function savePublishedPosts() {
-      var publishedPosts = document.getElementById("publishedPosts").innerHTML;
-      localStorage.setItem("posts", publishedPosts);
-    }
-
-    function removePublications() {
-      var publishedPosts = document.getElementById("publishedPosts");
-      publishedPosts.innerHTML = "";
-      localStorage.removeItem("posts");
-    }
-
-    window.addEventListener("load", function () {
-      loadPublishedPosts();
-      setTimeout(removePublications, 600000);
-    });
-
-    window.addEventListener("beforeunload", function () {
-      savePublishedPosts();
-    });
+    // Restante do código...
   </script>
 </body>
 </html>
