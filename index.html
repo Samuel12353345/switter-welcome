@@ -98,6 +98,41 @@
       margin-top: 50px;
       text-align: center;
     }
+
+    .post {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 10px;
+    }
+
+    .post-checkbox {
+      margin-right: 10px;
+    }
+
+    .post-content {
+      flex-grow: 1;
+      text-align: left;
+      padding-right: 10px;
+    }
+
+    .delete-button {
+      padding: 5px;
+      background-color: #dc3545;
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .delete-button:hover {
+      background-color: #c82333;
+    }
+
+    .delete-button:focus {
+      outline: none;
+    }
   </style>
 </head>
 <body>
@@ -139,8 +174,31 @@
       var postContent = postInput.value.trim();
       if (postContent !== "") {
         var username = localStorage.getItem("username") || "User0000";
-        var postElement = document.createElement("p");
-        postElement.innerText = username + ": " + postContent;
+        var postElement = document.createElement("div");
+        postElement.className = "post";
+        var checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.className = "post-checkbox";
+        checkbox.onclick = function () {
+          var postContent = this.nextElementSibling;
+          if (this.checked) {
+            postContent.style.textDecoration = "line-through";
+          } else {
+            postContent.style.textDecoration = "none";
+          }
+        };
+        var postContentElement = document.createElement("p");
+        postContentElement.className = "post-content";
+        postContentElement.innerText = username + ": " + postContent;
+        var deleteButton = document.createElement("button");
+        deleteButton.className = "delete-button";
+        deleteButton.innerText = "X";
+        deleteButton.onclick = function () {
+          this.parentNode.remove();
+        };
+        postElement.appendChild(checkbox);
+        postElement.appendChild(postContentElement);
+        postElement.appendChild(deleteButton);
         document.getElementById("publishedPosts").appendChild(postElement);
         postInput.value = "";
       }
